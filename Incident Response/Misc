@@ -1,0 +1,3 @@
+To confirm if a process is malicious or not based on location
+-------------------------------------------------------------
+wmic process where name="svchost.exe" get name, processid, parentprocessid, commandline
