@@ -1,1 +1,20 @@
+Realistic Incident Response Process Flow for Consultants
+--------------------------------------------------------
 
+In the event a client reaches out to you after noticing adversary presence in their infrastructure : 
+
+Initial Response 
+-----------------
+1. Send checklist  
+2. Confirm the Incident 
+3. Advise on Containment 
+
+Ellaborate Response
+--------------------
+4. Scoping based on Hypothesis 
+5. Detectiona and Analysis 
+
+Remediation
+-----------
+6. Remediation 
+7. Recovery 
