@@ -1,0 +1,12 @@
+Azure Attacks : 
+
+On Premise to Cloud in a hybrid environment : 
+---------------------------------------------
+1. Abuse conditional Access
+2. Abuse Single Sign On - 
+2.2 to generate Kerberos Silver Tickets with mimikatz to /target:aadg.windows.net.nsatc.net, /target: autologon.microsoftazuread-sso.com
+2.3 using mimikatz and DPAPI and abuse Primary Refresh Token to Generate JWT for Azure 
+3. Golden SAML - 
+From compromising ADFS server, its hash can be used to forge any ticket. 
+
+
