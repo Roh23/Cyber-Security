@@ -1,5 +1,10 @@
 Azure Attacks : 
 
+Initial Access : 
+-----------------
+1. Phishing - MFA bypass with evilnginx2 and Phishing with Device Code API 
+2. Password Spraying
+
 On Premise to Cloud in a hybrid environment : 
 ---------------------------------------------
 1. Abuse conditional Access
@@ -8,5 +13,7 @@ On Premise to Cloud in a hybrid environment :
 2.3 using mimikatz and DPAPI and abuse Primary Refresh Token to Generate JWT for Azure 
 3. Golden SAML - 
 From compromising ADFS server, its hash can be used to forge any ticket. 
+
+
 
 
